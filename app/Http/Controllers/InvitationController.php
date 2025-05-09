@@ -8,13 +8,14 @@ use App\Models\Invitation;
 use App\Models\Club;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\InvitationMail;
+use Illuminate\Support\Carbon;
 
 class InvitationController extends Controller
 {
     public function create()
     {
-    $clubs = Club::all();
-    return view('invitations.create', compact('clubs'));
+        $clubs = Club::all();
+        return view('invitations.create', compact('clubs'));
     }
 
     public function store(Request $request)
@@ -30,7 +31,7 @@ class InvitationController extends Controller
             'email' => $request->email,
             'club_id' => $request->club_id,
             'token' => $token,
-            'role' => 'vereinsverwalter',
+            'role' => 'manager',
             'expires_at' => now()->addDays(7),
         ]);
 

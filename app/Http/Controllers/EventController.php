@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+
 use App\Models\Club;
 use Illuminate\Http\Request;
 
@@ -22,8 +23,17 @@ class EventController extends Controller
 
     public function create()
     {
-        $clubs = Club::all(); // Alle Vereine laden
-        return view('events.create', compact('clubs')); // Vereine an die View übergeben
+        $user = auth()->user();
+
+        if ($user->hasRole('admin')) {
+            // Admin sieht alle Vereine
+            $clubs = Club::all();
+        } else {
+            // Alle anderen sehen nur ihren eigenen Verein
+            $clubs = Club::where('id', $user->club_id)->get();
+        }
+
+        return view('events.create', compact('clubs'));
     }
 
     // 🆕 Neues Event erstellen
@@ -44,8 +54,7 @@ class EventController extends Controller
             : $user->club_id;
 
         // 🔍 Überschneidung prüfen
-        $overlap = Event::where('club_id', '!=', $clubId)
-            ->where(function ($query) use ($request) {
+        $overlap = Event::where(function ($query) use ($request) {
                 $query->whereBetween('start', [$request->start, $request->end])
                       ->orWhereBetween('end', [$request->start, $request->end])
                       ->orWhere(function ($q) use ($request) {

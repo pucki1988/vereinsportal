@@ -15,6 +15,11 @@ class Event extends Model
         'is_visible',
     ];
 
+    protected $casts = [
+        'start' => 'datetime', // ← Cast hinzufügen
+        'end' => 'datetime', // ← Cast hinzufügen
+    ];
+
     public function club()
     {
         return $this->belongsTo(Club::class);

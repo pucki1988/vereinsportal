@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('email')->index();
             $table->foreignId('club_id')->constrained()->onDelete('cascade');
             $table->string('token')->unique();
-            $table->enum('role', ['vereinsverwalter']);
+            $table->enum('role', ['manager']);
             $table->timestamp('expires_at')->nullable();
             $table->timestamps();
         });

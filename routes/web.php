@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\InvitationController;
+use App\Http\Controllers\PublicEventController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -25,5 +26,5 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 });
 
 Route::resource('events', EventController::class)->middleware(['auth']);
-
+Route::get('/veranstaltungen', [PublicEventController::class, 'index'])->name('events.public');
 require __DIR__.'/auth.php';
