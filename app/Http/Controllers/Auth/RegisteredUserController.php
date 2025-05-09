@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Invitation;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -35,11 +36,34 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+         // Falls Token vorhanden → Einladung prüfen
+        $invitation = null;
+
+        if ($request->filled('token')) {
+            $invitation = Invitation::where('token', $request->token)->first();
+    
+            if (! $invitation || $invitation->expires_at->isPast()) {
+                return redirect()->route('register')->withErrors(['token' => 'Ungültiger oder abgelaufener Einladungscode.']);
+            }
+    
+            // Automatisch E-Mail aus Einladung setzen
+            $email = $invitation->email;
+        } else {
+            $request->validate(['email' => 'required|email|unique:users,email']);
+            $email = $request->email;
+        }
+
         $user = User::create([
             'name' => $request->name,
-            'email' => $request->email,
+            'email' => $email,
             'password' => Hash::make($request->password),
+            'club_id' => $invitation?->club_id,
         ]);
+
+        if ($invitation) {
+            $user->assignRole($invitation->role);
+            $invitation->delete();
+        }
 
         event(new Registered($user));
 

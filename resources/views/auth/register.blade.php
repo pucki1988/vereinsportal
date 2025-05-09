@@ -1,6 +1,20 @@
 <x-guest-layout>
+
+@php
+    $token = request('token');
+@endphp
     <form method="POST" action="{{ route('register') }}">
         @csrf
+
+        @if ($token)
+        <input type="hidden" name="token" value="{{ $token }}">
+        @endif
+
+        @if ($token)
+        <div class="mb-4 p-2 bg-blue-100 text-blue-800 rounded">
+        Du wurdest eingeladen, dich als Vereinsverwalter zu registrieren.
+        </div>
+        @endif
 
         <!-- Name -->
         <div>
