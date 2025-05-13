@@ -25,6 +25,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/invitations', [InvitationController::class, 'store'])->name('invitations.store');
 });
 
+
+
 Route::resource('events', EventController::class)->middleware(['auth']);
 Route::get('/veranstaltungen', [PublicEventController::class, 'index'])->name('events.public');
 require __DIR__.'/auth.php';
