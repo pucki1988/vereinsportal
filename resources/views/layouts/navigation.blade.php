@@ -18,6 +18,11 @@
                     <x-nav-link :href="route('events.index')" :active="request()->routeIs('events.index')">
                         {{ __('Events') }}
                     </x-nav-link>
+                    @role('admin')
+                    <x-nav-link :href="route('invitations.create')" :active="request()->routeIs('invitations.create')">
+                        {{ __('Einladen') }}
+                    </x-nav-link>
+                    @endrole
                 </div>
             </div>
 

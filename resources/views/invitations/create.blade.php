@@ -1,20 +1,31 @@
 <x-app-layout>
-<form action="{{ route('invitations.store') }}" method="POST" class="max-w-md mx-auto bg-white p-4 rounded">
+<x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            {{ __('Vereinsverwalter einladen') }}
+        </h2>
+    </x-slot>
+<div class="lg:py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900 dark:text-gray-100">
+<form action="{{ route('invitations.store') }}" method="POST">
         @csrf
-        <div class="mb-4">
-            <label class="block text-gray-700">E-Mail</label>
-            <input type="email" name="email" required class="w-full border px-2 py-1 rounded">
-        </div>
 
-        <div class="mb-4">
-            <label class="block text-gray-700">Verein</label>
-            <select name="club_id" required class="w-full border px-2 py-1 rounded">
-                @foreach($clubs as $club)
-                    <option value="{{ $club->id }}">{{ $club->name }}</option>
-                @endforeach
-            </select>
-        </div>
-
-        <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded">Einladen</button>
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend">E-Mail</legend>
+            <input type="email" name="email" name="email" placeholder="E-Mail" required>
+            <legend class="fieldset-legend">Verein</legend>
+                <select class="select w-full select-neutral" name="club_id" id="club_id">
+                    @foreach($clubs as $club)
+                        <option value="{{ $club->id }}">{{ $club->name }}</option>
+                    @endforeach
+                </select>
+        
+        </fieldset>
+        <button type="submit" class="btn btn-primary w-full mt-5 btn-lg">Einladen</button>
     </form>
+    </div>
+    </div>
+    </div>
+    </div>
     </x-app-layout>
