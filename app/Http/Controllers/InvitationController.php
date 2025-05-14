@@ -18,6 +18,12 @@ class InvitationController extends Controller
         return view('invitations.create', compact('clubs'));
     }
 
+    public function index()
+    {
+        $invitations = Invitation::with('club')->latest()->paginate(10);
+        return view('invitations.index', compact('invitations'));
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -37,6 +43,9 @@ class InvitationController extends Controller
 
         Mail::to($request->email)->send(new InvitationMail($invitation));
 
-        return redirect()->back()->with('success', 'Einladung versendet.');
+        //eturn redirect()->back()->with('success', 'Einladung versendet.');
+        return redirect()
+        ->route('invitations.index')
+        ->with('success', 'Der Einladung wurde versendet.');
     }
 }

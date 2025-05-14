@@ -23,8 +23,4 @@ class Invitation extends Model
         return $this->belongsTo(Club::class);
     }
 
-    public function isUsed()
-    {
-        return !is_null($this->used_at);
-    }
 }

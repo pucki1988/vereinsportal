@@ -11,12 +11,7 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
 
-    <!-- Fehlernachrichten anzeigen -->
-    @if(session('warning'))
-    <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded relative mt-4" role="alert">
-        <span class="block sm:inline">{{ session('warning') }}</span>
-    </div>
-    @endif
+    
 
     <form method="POST" action="{{ route('events.store') }}">
         @csrf

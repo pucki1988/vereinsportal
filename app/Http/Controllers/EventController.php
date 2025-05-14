@@ -17,8 +17,41 @@ class EventController extends Controller
     // 👀 Liste aller sichtbaren Events (z. B. im Frontend)
     public function index()
     {
-        $events = Event::where('is_visible', true)->orderBy('start')->get();
+        $events = Event::orderBy('start')->get();
         return view('events.index', compact('events'));
+    }
+
+    public function edit(Event $event)
+    {
+        // Alle Vereine laden, um sie im Select-Feld anzuzeigen
+        $clubs = Club::all();
+
+        // Event-Ansicht mit den geladenen Daten zurückgeben
+        return view('events.edit', compact('event', 'clubs'));
+    }
+
+    public function update(Request $request, Event $event)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'start' => 'required|date',
+            'end' => 'required|date|after:start',
+            'club_id' => 'required|exists:clubs,id'
+        ]);
+
+
+
+        $event->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'start' => $request->start,
+            'end' => $request->end,
+            'club_id' => $request->club_id,
+            'is_visible' => $request->has('is_visible') ? true : false
+        ]);
+
+        return redirect()->route('events.index')->with('success', 'Event wurde erfolgreich aktualisiert.');
     }
 
     public function create()
@@ -34,6 +67,14 @@ class EventController extends Controller
         }
 
         return view('events.create', compact('clubs'));
+    }
+
+    public function destroy(Event $event)
+    {
+        $event->delete();
+
+        return redirect()->route('events.index')
+            ->with('success', 'Event erfolgreich gelöscht.');
     }
 
     // 🆕 Neues Event erstellen

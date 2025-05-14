@@ -19,8 +19,11 @@
                         {{ __('Events') }}
                     </x-nav-link>
                     @role('admin')
-                    <x-nav-link :href="route('invitations.create')" :active="request()->routeIs('invitations.create')">
-                        {{ __('Einladen') }}
+                    <x-nav-link :href="route('clubs.index')" :active="request()->routeIs('clubs.index')">
+                        {{ __('Vereine') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('invitations.index')" :active="request()->routeIs('invitations.index')">
+                        {{ __('Einladungen') }}
                     </x-nav-link>
                     @endrole
                 </div>
@@ -31,7 +34,7 @@
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->name }}</div>
+                            <div><div class="badge badge-accent me-2">{{ Auth::user()->getRoleNames()->first() }}</div>{{ Auth::user()->name }}</div>
 
                             <div class="ms-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -62,6 +65,7 @@
 
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
+            <div class="badge badge-accent me-2">{{ Auth::user()->getRoleNames()->first() }}</div>
                 <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -78,6 +82,17 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('events.index')" :active="request()->routeIs('events.index')">
+                        {{ __('Events') }}
+            </x-responsive-nav-link>
+            @role('admin')
+            <x-responsive-nav-link :href="route('clubs.index')" :active="request()->routeIs('clubs.index')">
+                        {{ __('Vereine') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('invitations.index')" :active="request()->routeIs('invitations.index')">
+                        {{ __('Einladungen') }}
+            </x-responsive-nav-link>
+            @endrole
         </div>
 
         <!-- Responsive Settings Options -->
