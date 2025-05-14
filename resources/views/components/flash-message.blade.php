@@ -34,3 +34,9 @@
         </div>
     @endif
 </div>
+
+<script>
+    window.addEventListener('pageshow', function () {
+        sessionStorage.removeItem('toastShown');
+    });
+</script>

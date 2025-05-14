@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl">Vereine verwalten</h2>
+        <h2 class="font-semibold text-xl">Vereine</h2>
     </x-slot>
 
     <div class="lg:py-12">

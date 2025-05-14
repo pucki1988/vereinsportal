@@ -22,15 +22,27 @@
             @else
             <div class="badge badge-outline badge-error mb-3">ausgeblendet</div>
             @endif
+
+            @unlessrole('admin')
+            <legend class="fieldset-legend">Event Datum</legend>
+            <span>{{ $event->start->format('d.m.Y') }} - {{ $event->end->format('d.m.Y') }}</span>
+            @endif
+
+
             <legend class="fieldset-legend">Name</legend>
             <input type="text" id="title" name="title" placeholder="Titel des Event" value="{{ old('title', $event->title) }}" required>
             <legend class="fieldset-legend">Beschreibung</legend>
-            <textarea class="textarea h-24 w-full textarea-neutral" id="description" name="description" value="{{ old('description', $event->description) }}" placeholder="Beschreibe das Event"></textarea>
+            <textarea class="textarea h-24 w-full textarea-neutral" id="description" name="description" placeholder="Beschreibe das Event">
+            {{ old('description', $event->description) }}
+            </textarea>
+            
+            
+            @role('admin')
             <legend class="fieldset-legend">Start</legend>
             <input type="datetime-local" class="form-control" id="start" value="{{ old('start', $event->start) }}" name="start">
             <legend class="fieldset-legend">Ende</legend>
             <input type="datetime-local" class="form-control" id="end" value="{{ old('end', $event->end) }}" name="end" required>
-
+            @endif
             
             
             

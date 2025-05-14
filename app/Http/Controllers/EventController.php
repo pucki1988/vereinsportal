@@ -17,7 +17,13 @@ class EventController extends Controller
     // 👀 Liste aller sichtbaren Events (z. B. im Frontend)
     public function index()
     {
-        $events = Event::orderBy('start')->get();
+        if (auth()->user()->hasRole('admin')) {
+            $events = Event::with('club')->orderBy('start')->get();
+        } else {
+            $events = Event::where('club_id', auth()->user()->club_id)
+                           ->orderBy('start')
+                           ->get();
+        }
         return view('events.index', compact('events'));
     }
 
@@ -32,6 +38,8 @@ class EventController extends Controller
 
     public function update(Request $request, Event $event)
     {
+
+        if(auth()->user()->hasRole('admin')){
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -39,18 +47,71 @@ class EventController extends Controller
             'end' => 'required|date|after:start',
             'club_id' => 'required|exists:clubs,id'
         ]);
+        
 
+        
 
+        // 🔍 Überschneidung prüfen
+        $overlap = Event::where('id', '!=', $event->id) // eigenes Event ausschließen
+            ->where('is_visible', true) // nur sichtbare Events
+            ->where('created_at', '<', $event->created_at) // nur früher erstellte Events
+            ->where(function ($query) use ($request) {
+            $query->whereBetween('start', [$request->start, $request->end])
+                  ->orWhereBetween('end', [$request->start, $request->end])
+                  ->orWhere(function ($q) use ($request) {
+                      $q->where('start', '<=', $request->start)
+                        ->where('end', '>=', $request->end);
+                  });
+        })->exists();
 
-        $event->update([
-            'title' => $request->title,
-            'description' => $request->description,
-            'start' => $request->start,
-            'end' => $request->end,
-            'club_id' => $request->club_id,
-            'is_visible' => $request->has('is_visible') ? true : false
-        ]);
+        
+        $data = [
+                'title' => $request->title,
+                'description' => $request->description,
+                'start' => $request->start,
+                'end' => $request->end,
+                'club_id' => $request->club_id,
+                'is_visible' => $request->has('is_visible')
+            ];
 
+            $event->update($data);
+            if ($overlap) {
+
+                if($request->has('is_visible')){
+                    return redirect()->route('events.index')->with('warning', 'Event wurde erfolgreich aktualisiert. Der Termin überschneidet sich aber mit einem anderen Event ist aber öffentlich sichtbar');
+                }
+                return redirect()->route('events.index')->with('warning', 'Event wurde erfolgreich aktualisiert. Der Termin überschneidet sich aber mit einem anderen Event und und ist derzeit öffentlich nicht sichtbar.');
+            }
+        }else{
+
+            $request->validate([
+                'title' => 'required|string|max:255',
+                'description' => 'nullable|string'
+            ]);
+
+            $overlap = Event::where('id', '!=', $event->id) // eigenes Event ausschließen
+            ->where('is_visible', true) // nur sichtbare Events
+            ->where('created_at', '<', $event->created_at) // nur früher erstellte Events
+            ->where(function ($query) use ($event) {
+            $query->whereBetween('start', [$event->start, $event->end])
+                  ->orWhereBetween('end', [$event->start, $event->end])
+                  ->orWhere(function ($q) use ($event) {
+                      $q->where('start', '<=', $event->start)
+                        ->where('end', '>=', $event->end);
+                  });
+        })->exists();
+            $data = [
+                'title' => $request->title,
+                'description' => $request->description
+            ];
+
+            $event->update($data);
+            if ($overlap) {
+                // 📩 Optional: andere Vereine benachrichtigen
+                // Mail::to(...)->send(...);
+                return redirect()->route('events.index')->with('warning', 'Event wurde erfolgreich aktualisiert. Der Termin überschneidet sich mit einem anderen Event und ist derzeit öffentlich nicht sichtbar.');
+            }
+        }
         return redirect()->route('events.index')->with('success', 'Event wurde erfolgreich aktualisiert.');
     }
 
@@ -120,7 +181,7 @@ class EventController extends Controller
             // 📩 Optional: andere Vereine benachrichtigen
             // Mail::to(...)->send(...);
 
-            return back()->with('warning', 'Der Termin überschneidet sich mit einem anderen Verein und ist derzeit nicht sichtbar.');
+            return back()->with('warning', 'Der Termin überschneidet sich mit einem anderen Event und ist derzeit öffentlich nicht sichtbar.');
         }
 
         return back()->with('success', 'Event wurde erfolgreich erstellt.');
