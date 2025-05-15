@@ -35,6 +35,14 @@
             <textarea class="textarea h-24 w-full textarea-neutral" id="description" name="description" placeholder="Beschreibe das Event">
             {{ old('description', $event->description) }}
             </textarea>
+            <legend class="fieldset-legend">Veranstaltungsort</legend>
+            <input
+                type="text"
+                id="location"
+                name="location"
+                value="{{ old('location', $event->location ?? '') }}"
+                placeholder="z. B. Sporthalle Nord"
+            />
             
             
             @role('admin')
@@ -54,7 +62,7 @@
                 <legend class="fieldset-legend">Verein</legend>
                 <select class="select w-full select-neutral" name="club_id" id="club_id" value="{{ old('club_id', $event->club_id) }}">
                     @foreach($clubs as $club)
-                        <option value="{{ $club->id }}">{{ $club->name }}</option>
+                        <option @if($event->club_id == $club->id) selected @endif value="{{ $club->id }}">{{ $club->name }}</option>
                     @endforeach
                 </select>
             @else

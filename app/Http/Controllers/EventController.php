@@ -19,7 +19,7 @@ class EventController extends Controller
     {
         if (auth()->user()->hasRole('admin')) {
             $events = Event::with('club')->orderBy('start')->get();
-        } else {
+        } elseif(auth()->user()->hasRole('manager')) {
             $events = Event::where('club_id', auth()->user()->club_id)
                            ->orderBy('start')
                            ->get();
@@ -45,7 +45,7 @@ class EventController extends Controller
             'description' => 'nullable|string',
             'start' => 'required|date',
             'end' => 'required|date|after:start',
-            'club_id' => 'required|exists:clubs,id'
+            'club_id' => 'required|exists:clubs,id',
         ]);
         
 
@@ -71,7 +71,8 @@ class EventController extends Controller
                 'start' => $request->start,
                 'end' => $request->end,
                 'club_id' => $request->club_id,
-                'is_visible' => $request->has('is_visible')
+                'is_visible' => $request->has('is_visible'),
+                'location' => $request->location,
             ];
 
             $event->update($data);
@@ -86,7 +87,7 @@ class EventController extends Controller
 
             $request->validate([
                 'title' => 'required|string|max:255',
-                'description' => 'nullable|string'
+                'description' => 'nullable|string',
             ]);
 
             $overlap = Event::where('id', '!=', $event->id) // eigenes Event ausschließen
@@ -102,7 +103,8 @@ class EventController extends Controller
         })->exists();
             $data = [
                 'title' => $request->title,
-                'description' => $request->description
+                'description' => $request->description,
+                'location' => $request->location,
             ];
 
             $event->update($data);
@@ -175,6 +177,7 @@ class EventController extends Controller
             'end' => $request->end,
             'club_id' => $clubId,
             'is_visible' => $isVisible,
+            'location' => $request->location,
         ]);
 
         if ($overlap) {

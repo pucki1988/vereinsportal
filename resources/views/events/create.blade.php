@@ -24,6 +24,14 @@
             <input type="datetime-local" class="form-control" id="start" name="start">
             <legend class="fieldset-legend">Ende</legend>
             <input type="datetime-local" class="form-control" id="end" name="end" required>
+            <legend class="fieldset-legend">Veranstaltungsort</legend>
+            <input
+                type="text"
+                class="form-control"
+                id="location"
+                name="location"
+                placeholder="z. B. Sporthalle Nord"
+            />
 
             @role('admin')
                 <legend class="fieldset-legend">Verein</legend>

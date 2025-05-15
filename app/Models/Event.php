@@ -13,6 +13,7 @@ class Event extends Model
         'end',
         'club_id',
         'is_visible',
+        'location'
     ];
 
     protected $casts = [
