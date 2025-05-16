@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Event;
+use App\Models\Club;
 
 class PublicEventController extends Controller
 {
@@ -29,7 +30,7 @@ class PublicEventController extends Controller
         }
 
         $events = $query->get();
-        $clubs = \App\Models\Club::orderBy('name')->get();
+        $clubs = Club::orderBy('name')->get();
 
         return view('public.events.index', compact('events', 'clubs'));
     }

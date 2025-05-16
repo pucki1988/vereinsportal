@@ -15,7 +15,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+        <div class="flex flex-col min-h-screen bg-gray-100 dark:bg-gray-900">
 
             @auth
                 @include('layouts.navigation')
@@ -34,10 +34,14 @@
             @endisset
 
             <!-- Page Content -->
-            <main>
+            <main class="flex-1">
                 {{ $slot }}
             </main>
+            <footer class="footer sm:footer-horizontal footer-center bg-base-300 text-base-content p-4">
+            <p>Copyright © {{ now()->format('Y') }} – All rights reserved by Pro Schönbrunn am Lusen</p>
+            </footer>
         </div>
         <x-flash-message />
+        
     </body>
 </html>

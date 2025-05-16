@@ -20,10 +20,11 @@ public function store(Request $request)
 {
     $request->validate([
         'name' => 'required|string|max:255',
-        'color' => 'string|max:255'
+        'color' => 'string|max:255',
+        'website' => 'string|max:255'
     ]);
 
-    Club::create(['name' => $request->name,'color' => $request->color]);
+    Club::create(['name' => $request->name,'color' => $request->color,'website' => $request->website]);
 
     return redirect()->route('clubs.index')->with('success', 'Der Verein wurde erfolgreich erstellt.');
 }
@@ -37,13 +38,15 @@ public function update(Request $request, Club $club)
     // Validierung der Eingaben
     $request->validate([
         'name' => 'required|string|max:255',
-        'color' => 'string|max:255',
+        'color' => 'nullable|string|max:255',
+        'website' => 'nullable|string|max:255'
     ]);
 
     // Aktualisieren der Daten
     $club->update([
         'name' => $request->name,
         'color' => $request->color,
+        'website' => $request->website
     ]);
 
     return redirect()

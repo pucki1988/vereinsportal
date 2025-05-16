@@ -1,48 +1,14 @@
 @php
     use Carbon\Carbon;
 @endphp
+
 <x-app-layout>
     
-    <div class="py-6 px-4 max-w-7xl mx-auto">
 
-    
-    <form method="GET" action="{{ route('veranstaltungen.index') }}" class="mb-6 flex gap-3 items-end">
-    <fieldset class="fieldset bg-base-100 bg-base-100 rounded-box  border p-4 flex w-full flex flex-col md:flex-row md:flex-wrap gap-3 w-full">
-    <legend class="fieldset-legend">Event finden</legend>
-            <div class="min-w-[150px]">
-            <legend class="fieldset-legend">Verein</legend>
-            <select name="club_id" id="club_id" class="select select-bordered w-full max-w-xs">
-                <option value="">Alle</option>
-                @foreach($clubs as $club)
-                    <option value="{{ $club->id }}" @selected(request('club_id') == $club->id)>
-                        {{ $club->name }}
-                    </option>
-                @endforeach
-            </select>
-            </div>
-            <div class="flex flex-wrap gap-3">
-                <div class="min-w-[150px]">
-                <legend class="fieldset-legend">Datum (von)</legend>
-                <input type="date" name="start_date" id="start_date" value="{{ request('start_date') }}" class="input input-bordered">
-                </div>
-                <div class="min-w-[150px]">
-                <legend class="fieldset-legend">Datum (bis)</legend>
-                <input type="date" name="end_date" id="end_date" value="{{ request('end_date') }}" class="input input-bordered">
-                </div>
-            </div>
-
-            
-
-            <div class="flex items-end">
-            <button type="submit" class="btn bg-primary-content">Filtern</button>
-            <a href="{{ route('veranstaltungen.index') }}" class="btn btn-outline ms-2">Filter löschen</a>
-            </div>
+<div class="py-6 px-4 max-w-7xl mx-auto">
+        <div class="text-xl lg:text-3xl py-2">Bevorstehende Veranstaltungen</div>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-6">
         
-        </fieldset>
-        
-    </form>
-    
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-3">
         @foreach ($events as $event)
 
         <div class="card bg-base-100 w-100 shadow-sm" style="border-bottom: 5px solid {{ $event->club->color }};">
@@ -51,7 +17,7 @@
             {{ $event->title }}
             
             @if($event->start && Carbon::parse($event->start)->between(Carbon::now(), Carbon::now()->addDays(30)))
-            <div class="badge bg-primary-content badge-xs">DEMNÄCHST</div>
+            <div class="badge bg-primary-content badge-xs">in {{ Carbon::now()->startOfDay()->diffInDays(Carbon::parse($event->start->startOfDay(),false)) }} Tagen</div>
             @endif
             </h2>
             <ul class="list bg-base-100 rounded-box shadow-md mb-3">
@@ -96,5 +62,28 @@ Details</a>
         </div>
         @endforeach
         </div>
-    </div>
+
+
+
+        <div class="text-xl lg:text-3xl py-2">Vereine</div>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-6">
+        @foreach($clubs as $club)
+        <div class="card text-base-100 w-full bg-info-content">
+            <div class="card-body flex justify-between">
+                <h2 class="card-title">{{$club->name}}</h2>
+                
+                <div class="card-actions justify-end">
+                
+                @if($club->website !== null)
+                <a target="_blank" href="{{ $club->website }}" class="btn  ms-2">Website</a>
+                @endif
+                <a href="{{ route('veranstaltungen.index',['club_id' => $club->id]) }}" class="btn btn-outline ms-2">Veranstaltungen</a>
+                </div>
+            </div>
+        </div>
+        @endforeach
+        </div>
+    
+</div>
+
 </x-app-layout>

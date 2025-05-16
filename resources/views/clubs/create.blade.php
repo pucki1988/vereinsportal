@@ -13,6 +13,8 @@
             <input type="text" id="name" name="name" class="w-full" placeholder="Vereinsname" required>
             <legend class="fieldset-legend">Farbe</legend>
             <input type="color"  class="w-16 h-16 rounded" name="color" required/>
+            <legend class="fieldset-legend">Website</legend>
+            <input type="text" id="website" name="website" class="w-full" placeholder="Website" >
         
         <button type="submit" class="btn btn-primary w-full mt-5 btn-lg">Verein erstellen</button>
         

@@ -5,10 +5,11 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\PublicEventController;
 use App\Http\Controllers\ClubController;
+use App\Http\Controllers\HomeController;
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
+Route::get('/welcome', function () {
     return view('welcome');
 });
 
@@ -28,9 +29,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/invitations', [InvitationController::class, 'index'])->name('invitations.index');
 });
 
-Route::resource('clubs', ClubController::class)->middleware(['auth', 'role:admin']);
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::resource('events', EventController::class)->middleware(['auth','role:admin','role:manager']);
+Route::resource('clubs', ClubController::class)->middleware(['auth', 'role:admin']);
+Route::resource('events', EventController::class)->middleware(['auth','role:admin|manager']);
 Route::resource('veranstaltungen', PublicEventController::class)->only(['index', 'show'])->parameters(['veranstaltungen' => 'event']);
 
 require __DIR__.'/auth.php';

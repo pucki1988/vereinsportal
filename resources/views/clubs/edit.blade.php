@@ -18,14 +18,17 @@
 
                     <legend class="fieldset-legend">Name</legend>
                     <input type="text" id="name" name="name" class="w-full" placeholder="Vereinsname" value="{{ old('name', $club->name) }}" required>
-            <legend class="fieldset-legend">Farbe</legend>
-            <input type="color"  class="w-16 h-16 rounded" name="color" value="{{ old('color', $club->color) }}" required/>
-                
+                    <legend class="fieldset-legend">Website</legend>
+                    <input type="text" id="website" name="website" class="w-full" placeholder="Website" value="{{ old('website', $club->website) }}">
+                    
+                    <legend class="fieldset-legend">Farbe</legend>
+                    <input type="color"  class="w-16 h-16 rounded" name="color" value="{{ old('color', $club->color) }}"/>
+                    
             
             
             
 
-                    <div class="flex justify-end">
+                    <div class="flex justify-end mt-3">
                         <x-primary-button>
                             {{ __('Speichern') }}
                         </x-primary-button>
