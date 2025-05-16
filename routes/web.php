@@ -30,6 +30,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 Route::resource('clubs', ClubController::class)->middleware(['auth', 'role:admin']);
 
-Route::resource('events', EventController::class)->middleware(['auth']);
-Route::get('/veranstaltungen', [PublicEventController::class, 'index'])->name('events.public');
+Route::resource('events', EventController::class)->middleware(['auth','role:admin','role:manager']);
+Route::resource('veranstaltungen', PublicEventController::class)->only(['index', 'show'])->parameters(['veranstaltungen' => 'event']);
+
 require __DIR__.'/auth.php';
