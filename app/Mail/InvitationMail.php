@@ -28,7 +28,7 @@ class InvitationMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Invitation Mail',
+            subject: 'Einladung als Vereinsverwalter',
         );
     }
 
@@ -59,6 +59,7 @@ class InvitationMail extends Mailable
                 ->with([
                     'invitation' => $this->invitation,
                     'url' => url('/register?token=' . $this->invitation->token),
+                    'base_url' => url('/register')
                 ]);
     }
 }

@@ -38,7 +38,7 @@ class InvitationController extends Controller
             'club_id' => $request->club_id,
             'token' => $token,
             'role' => 'manager',
-            'expires_at' => now()->addDays(7),
+            'expires_at' => now()->addDays(30),
         ]);
 
         Mail::to($request->email)->send(new InvitationMail($invitation));
@@ -46,6 +46,6 @@ class InvitationController extends Controller
         //eturn redirect()->back()->with('success', 'Einladung versendet.');
         return redirect()
         ->route('invitations.index')
-        ->with('success', 'Der Einladung wurde versendet.');
+        ->with('success', 'Die Einladung wurde versendet.');
     }
 }
