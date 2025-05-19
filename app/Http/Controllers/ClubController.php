@@ -7,8 +7,19 @@ class ClubController extends Controller
 {
     public function index()
     {
-    $clubs = Club::all();
-    return view('clubs.index', compact('clubs'));
+
+        $user = auth()->user();
+
+        if ($user->hasRole('manager')) {
+            $clubs = Club::where('id', $user->club_id)->get();
+        } else {
+            $clubs = Club::all(); // z. B. für Admin
+        }
+
+
+
+       
+        return view('clubs.index', compact('clubs'));
     }
 
 public function create()
@@ -20,11 +31,17 @@ public function store(Request $request)
 {
     $request->validate([
         'name' => 'required|string|max:255',
-        'color' => 'string|max:255',
-        'website' => 'string|max:255'
+        'website' => 'nullable|string|max:255',
+        'address' => 'nullable|string|max:255'
     ]);
 
-    Club::create(['name' => $request->name,'color' => $request->color,'website' => $request->website]);
+    Club::create([
+        'name' => $request->name,
+        'website' => $request->website,
+        'address' => $request->address,
+        'send_to_church'=>$request->boolean('send_to_church'),
+        'send_to_community'=>$request->boolean('send_to_community')
+    ]);
 
     return redirect()->route('clubs.index')->with('success', 'Der Verein wurde erfolgreich erstellt.');
 }
@@ -39,14 +56,19 @@ public function update(Request $request, Club $club)
     $request->validate([
         'name' => 'required|string|max:255',
         'color' => 'nullable|string|max:255',
-        'website' => 'nullable|string|max:255'
+        'website' => 'nullable|string|max:255',
+        'address' => 'nullable|string|max:255'
     ]);
+
 
     // Aktualisieren der Daten
     $club->update([
         'name' => $request->name,
         'color' => $request->color,
-        'website' => $request->website
+        'website' => $request->website,
+        'address' => $request->address,
+        'send_to_church'=>$request->boolean('send_to_church'),
+        'send_to_community'=>$request->boolean('send_to_community')
     ]);
 
     return redirect()
@@ -60,4 +82,17 @@ public function destroy(Club $club)
     return redirect()->route('clubs.index')
         ->with('success', 'Verein erfolgreich gelöscht.');
 }
+
+    public function show(Club $club)
+    {
+        $user = auth()->user();
+
+        if ($user->hasRole('manager') && $user->club_id !== $club->id) {
+            abort(403);
+        }
+
+        return view('clubs.show', compact('club'));
+    }
+
+
 }

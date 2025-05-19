@@ -11,10 +11,19 @@
         
             <legend class="fieldset-legend">Name</legend>
             <input type="text" id="name" name="name" class="w-full" placeholder="Vereinsname" required>
-            <legend class="fieldset-legend">Farbe</legend>
-            <input type="color"  class="w-16 h-16 rounded" name="color" required/>
+            
             <legend class="fieldset-legend">Website</legend>
             <input type="text" id="website" name="website" class="w-full" placeholder="Website" >
+
+            <legend class="fieldset-legend">Anschrift</legend>
+            <input type="text" id="address" name="address" class="w-full" placeholder="Anschrift">
+                    
+            <legend class="fieldset-legend">Weitergabe an Pfarrei</legend>
+            <input type="checkbox" class="toggle toggle-neutral" name="send_to_church"  id="send_to_church" value="1" />
+            
+            <legend class="fieldset-legend">Weitergabe an Gemeinde</legend>
+            <input type="checkbox" class="toggle toggle-neutral" name="send_to_community"  id="send_to_community" value="1" />
+
         
         <button type="submit" class="btn btn-primary w-full mt-5 btn-lg">Verein erstellen</button>
         

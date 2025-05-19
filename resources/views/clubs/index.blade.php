@@ -16,7 +16,6 @@
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Farbe</th>
                     <th>Aktionen</th>
                 </tr>
             </thead>
@@ -24,7 +23,6 @@
                 @foreach($clubs as $club)
                     <tr>
                         <td>{{ $club->name }}</td>
-                        <td><div class="badge" style="background-color: {{ $club->color }}; color: white;"></div></td>
                         <td><div class="flex space-x-2">
                             <a href="{{ route('clubs.edit', $club->id) }}" class="btn">
                             <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5">

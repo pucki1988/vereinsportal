@@ -13,9 +13,9 @@
 
         <div class="card bg-base-100 w-100 shadow-sm border-b-4 border-info-content" >
         <div class="card-body">
-            @if($event->start && Carbon::parse($event->start)->between(Carbon::now(), Carbon::now()->addDays(30)))
+            
             <div class="badge bg-primary-content badge-xs">in {{ Carbon::now()->startOfDay()->diffInDays(Carbon::parse($event->start->startOfDay(),false)) }} Tagen</div>
-            @endif
+            
             <div class="flex justify-between">
             <h2 class="text-2xl font-bold text-info-content">{{ $event->title }}</h2>
      
@@ -38,8 +38,8 @@
                 <span>{{ $event->location}}</span>
             </li>
             </ul>
-            <div class="card-actions justify-center">
-            <a href="{{ route('veranstaltungen.show', $event) }}" class="btn btn-content-neutral">
+            <div class="card-actions justify-start">
+            <a href="{{ route('veranstaltungen.show', $event) }}" class="btn btn-content-neutral mt-2">
      <div class="text-4xl tabular-nums"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
   <path fill-rule="evenodd" d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-7-4a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM9 9a.75.75 0 0 0 0 1.5h.253a.25.25 0 0 1 .244.304l-.459 2.066A1.75 1.75 0 0 0 10.747 15H11a.75.75 0 0 0 0-1.5h-.253a.25.25 0 0 1-.244-.304l.459-2.066A1.75 1.75 0 0 0 9.253 9H9Z" clip-rule="evenodd" />
 </svg></div>
@@ -60,10 +60,12 @@ Details</a>
             <div class="card-body flex justify-between">
                 <h2 class="card-title">{{$club->name}}</h2>
                 
-                <div class="card-actions justify-end">
+                <div class="card-actions justify-start">
                 
                 @if($club->website !== null)
                 <a target="_blank" href="{{ $club->website }}" class="btn  ms-2">Website</a>
+                @else
+                <a href="{{ route('clubinfo.show', $club->id) }}" class="btn btn-content-neutral">Information</a>
                 @endif
                 <a href="{{ route('veranstaltungen.index',['club_id' => $club->id]) }}" class="btn btn-outline ms-2">Veranstaltungen</a>
                 </div>

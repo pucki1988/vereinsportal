@@ -7,6 +7,8 @@ use App\Models\Event;
 use App\Models\Club;
 use Illuminate\Http\Request;
 
+use Carbon\Carbon;
+
 class EventController extends Controller
 {
     public function __construct()
@@ -18,9 +20,9 @@ class EventController extends Controller
     public function index()
     {
         if (auth()->user()->hasRole('admin')) {
-            $events = Event::with('club')->orderBy('start')->get();
+            $events = Event::with('club')->orderBy('start')->where('start', '>=', now()->startOfDay())->get();
         } elseif(auth()->user()->hasRole('manager')) {
-            $events = Event::where('club_id', auth()->user()->club_id)
+            $events = Event::where('club_id', auth()->user()->club_id)->where('start', '>=', now()->startOfDay())
                            ->orderBy('start')
                            ->get();
         }
@@ -40,27 +42,38 @@ class EventController extends Controller
     {
 
         if(auth()->user()->hasRole('admin')){
-        $request->validate([
+        $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'start' => 'required|date',
-            'end' => 'required|date|after:start',
+            'start_date' => 'required|date',
+            'start_time' => 'nullable',
+            'end_date'   => 'required|date|after_or_equal:start_date',
+            'end_time' => 'nullable',
+            'all_day' => 'nullable|boolean',
             'club_id' => 'required|exists:clubs,id',
         ]);
         
-
+        $allDay = $request->boolean('all_day');
         
+        $start = $allDay
+            ? Carbon::parse($validated['start_date'])->startOfDay()
+            : Carbon::parse($validated['start_date'] . ' ' . ($validated['start_time'] ?? '00:00:00'));
+
+        $end = $allDay
+            ? Carbon::parse($validated['end_date'])->endOfDay()
+            : Carbon::parse($validated['end_date'] . ' ' . ($validated['end_time'] ?? '23:59:59'));
+
 
         // 🔍 Überschneidung prüfen
         $overlap = Event::where('id', '!=', $event->id) // eigenes Event ausschließen
             ->where('is_visible', true) // nur sichtbare Events
             ->where('created_at', '<', $event->created_at) // nur früher erstellte Events
-            ->where(function ($query) use ($request) {
-            $query->whereBetween('start', [$request->start, $request->end])
-                  ->orWhereBetween('end', [$request->start, $request->end])
-                  ->orWhere(function ($q) use ($request) {
-                      $q->where('start', '<=', $request->start)
-                        ->where('end', '>=', $request->end);
+            ->where(function ($query) use ($start,$end) {
+            $query->whereBetween('start', [$start, $end])
+                  ->orWhereBetween('end', [$start, $end])
+                  ->orWhere(function ($q) use ($start,$end) {
+                      $q->where('start', '<=', $start)
+                        ->where('end', '>=', $end);
                   });
         })->exists();
 
@@ -68,8 +81,8 @@ class EventController extends Controller
         $data = [
                 'title' => $request->title,
                 'description' => $request->description,
-                'start' => $request->start,
-                'end' => $request->end,
+                'start' => $start,
+                'end' => $end,
                 'club_id' => $request->club_id,
                 'is_visible' => $request->has('is_visible'),
                 'location' => $request->location,
@@ -143,12 +156,30 @@ class EventController extends Controller
     // 🆕 Neues Event erstellen
     public function store(Request $request)
     {
-        $request->validate([
+        
+        
+        $validated =$request->validate([
             'title' => 'required|string',
-            'start' => 'required|date',
-            'end'   => 'required|date|after_or_equal:start',
+            'start_date' => 'required|date',
+            'start_time' => 'nullable',
+            'end_date'   => 'required|date|after_or_equal:start_date',
+            'end_time' => 'nullable',
+            'all_day' => 'nullable|boolean',
             'description' => 'nullable|string',
         ]);
+
+
+        $allDay = $request->boolean('all_day');
+
+        $start = $allDay
+            ? Carbon::parse($validated['start_date'])->startOfDay()
+            : Carbon::parse($validated['start_date'] . ' ' . ($validated['start_time'] ?? '00:00:00'));
+    
+        $end = $allDay
+            ? Carbon::parse($validated['end_date'])->endOfDay()
+            : Carbon::parse($validated['end_date'] . ' ' . ($validated['end_time'] ?? '23:59:59'));
+
+
 
         $user = auth()->user();
 
@@ -158,12 +189,12 @@ class EventController extends Controller
             : $user->club_id;
 
         // 🔍 Überschneidung prüfen
-        $overlap = Event::where(function ($query) use ($request) {
-                $query->whereBetween('start', [$request->start, $request->end])
-                      ->orWhereBetween('end', [$request->start, $request->end])
-                      ->orWhere(function ($q) use ($request) {
-                          $q->where('start', '<=', $request->start)
-                            ->where('end', '>=', $request->end);
+        $overlap = Event::where(function ($query) use ($start,$end) {
+                $query->whereBetween('start', [$start, $end])
+                      ->orWhereBetween('end', [$start, $end])
+                      ->orWhere(function ($q) use ($start,$end) {
+                          $q->where('start', '<=', $start)
+                            ->where('end', '>=', $end);
                       });
             })->exists();
 
@@ -173,11 +204,12 @@ class EventController extends Controller
         $event = Event::create([
             'title' => $request->title,
             'description' => $request->description,
-            'start' => $request->start,
-            'end' => $request->end,
+            'start' => $start,
+            'end' => $end,
             'club_id' => $clubId,
             'is_visible' => $isVisible,
             'location' => $request->location,
+            'all_day' => $allDay
         ]);
 
         if ($overlap) {

@@ -4,7 +4,7 @@
     <div class="py-6 px-4 max-w-7xl mx-auto">
 
 
-    <div class="hero bg-base-100 min-h-80" style="border-bottom: 5px solid {{ $event->club->color }};">
+    <div class="hero bg-base-100 min-h-80 border-b-4 border-info-content">
         <div class="hero-content text-center">
             <div class="max-w-md">
             <h1 class="text-5xl font-bold">{{ $event->title }}</h1>

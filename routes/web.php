@@ -8,6 +8,8 @@ use App\Http\Controllers\ClubController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BoardMemberController;
 use App\Http\Controllers\PublicBoardController;
+use App\Http\Controllers\PublicClubController;
+
 
 use Illuminate\Support\Facades\Route;
 
@@ -33,12 +35,16 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 
 
-Route::resource('clubs', ClubController::class)->middleware(['auth', 'role:admin']);
+Route::resource('clubs', ClubController::class)->middleware(['auth', 'role:admin|manager']);
 Route::resource('events', EventController::class)->middleware(['auth','role:admin|manager']);
 Route::resource('board-members', BoardMemberController::class)->middleware(['auth']);
+
+
 Route::resource('veranstaltungen', PublicEventController::class)->only(['index', 'show'])->parameters(['veranstaltungen' => 'event']);
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/board', [PublicBoardController::class, 'index'])->name('board');
+
+Route::resource('clubinfo', PublicClubController::class)->only(['show'])->parameters(['clubinfo' => 'club']);
 
 
 require __DIR__.'/auth.php';
