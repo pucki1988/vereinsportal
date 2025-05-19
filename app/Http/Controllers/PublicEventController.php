@@ -29,6 +29,8 @@ class PublicEventController extends Controller
             $query->whereDate('start', '<=', $request->end_date);
         }
 
+        $query->where('start', '>=', now()->startOfDay());
+
         $events = $query->get();
         $clubs = Club::orderBy('name')->get();
 

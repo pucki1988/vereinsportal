@@ -18,6 +18,9 @@
                     <x-nav-link :href="route('veranstaltungen.index')" :active="request()->routeIs('veranstaltungen.index')">
                         {{ __('Veranstaltungen') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('board')" :active="request()->routeIs('board')">
+                        {{ __('Vorstand') }}
+                    </x-nav-link>
                     
                 </div>
             </div>

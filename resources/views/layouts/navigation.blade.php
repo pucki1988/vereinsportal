@@ -22,6 +22,9 @@
                     <x-nav-link :href="route('clubs.index')" :active="request()->routeIs('clubs.index')">
                         {{ __('Vereine') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('board-members.index')" :active="request()->routeIs('board-member.index')">
+                        {{ __('Vorstandschaft') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('invitations.index')" :active="request()->routeIs('invitations.index')">
                         {{ __('Einladungen') }}
                     </x-nav-link>

@@ -12,7 +12,7 @@ class HomeController extends Controller
     public function index()
     {
     $events = Event::where('is_visible', true)
-                   ->where('start', '>=', now())
+                   ->where('start', '>=', now()->startOfDay())
                    ->orderBy('start')
                    ->take(3)
                    ->with('club')
