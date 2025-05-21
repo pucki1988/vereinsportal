@@ -37,8 +37,8 @@
             <main class="flex-1">
                 {{ $slot }}
             </main>
-            <footer class="footer sm:footer-horizontal footer-center bg-base-300 text-base-content p-4">
-            <p>Copyright © {{ now()->format('Y') }} – All rights reserved by Pro Schönbrunn am Lusen</p>
+            <footer class="footer sm:footer-horizontal footer-center bg-info-content text-base-100 p-4">
+            <p>Copyright © {{ now()->format('Y') }} |  Pro Schönbrunn am Lusen</p>
             </footer>
         </div>
         <x-flash-message />

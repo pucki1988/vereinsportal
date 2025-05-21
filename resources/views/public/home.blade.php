@@ -39,7 +39,7 @@
             </li>
             </ul>
             <div class="card-actions justify-start">
-            <a href="{{ route('veranstaltungen.show', $event) }}" class="btn btn-content-neutral mt-2">
+            <a href="{{ route('veranstaltungen.show', $event) }}" class="btn bg-info-content text-base-100 mt-2">
      <div class="text-4xl tabular-nums"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
   <path fill-rule="evenodd" d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-7-4a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM9 9a.75.75 0 0 0 0 1.5h.253a.25.25 0 0 1 .244.304l-.459 2.066A1.75 1.75 0 0 0 10.747 15H11a.75.75 0 0 0 0-1.5h-.253a.25.25 0 0 1-.244-.304l.459-2.066A1.75 1.75 0 0 0 9.253 9H9Z" clip-rule="evenodd" />
 </svg></div>
@@ -56,17 +56,18 @@ Details</a>
         <div class="text-xl lg:text-3xl py-2">Vereine</div>
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-6">
         @foreach($clubs as $club)
+
+        
+
         <div class="card text-base-100 w-full bg-info-content">
             <div class="card-body flex justify-between">
                 <h2 class="card-title">{{$club->name}}</h2>
                 
                 <div class="card-actions justify-start">
                 
-                @if($club->website !== null)
-                <a target="_blank" href="{{ $club->website }}" class="btn  ms-2">Website</a>
-                @else
+                
                 <a href="{{ route('clubinfo.show', $club->id) }}" class="btn btn-content-neutral">Information</a>
-                @endif
+                
                 <a href="{{ route('veranstaltungen.index',['club_id' => $club->id]) }}" class="btn btn-outline ms-2">Veranstaltungen</a>
                 </div>
             </div>
