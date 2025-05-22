@@ -25,6 +25,11 @@
                 </div>
             </div>
 
+            <div class="hidden sm:flex sm:items-center sm:ms-6">
+            <a href="login" class="btn bg-info-content text-base-100">Login</a>
+
+            </div>
+
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
                 <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
@@ -50,7 +55,15 @@
                         {{ __('Vorstand') }}
             </x-responsive-nav-link>
         </div>
+        <div class="py-1 border-t border-gray-200 dark:border-gray-600 bg-info-content text-base-100">
+            <div class="space-y-1">
 
+                
+                <a href="/login" class="block w-full ps-3 pe-4 py-2 bg-info-content text-base-100">
+                    {{ __('Login') }}
+                </a>                
+            </div>
+        </div>
         
     </div>
 </nav>
