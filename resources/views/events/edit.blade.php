@@ -85,7 +85,7 @@
                 <input type="hidden" name="club_id" value="{{ $clubs->first()->id }}">
             @endrole
         </fieldset>
-        <button type="submit" class="btn btn-primary w-full mt-5 btn-lg">Event speichern</button>
+        <button type="submit" class="btn bg-info-content text-base-100 w-full mt-5 btn-lg">Event speichern</button>
     </form>
 
     </div>

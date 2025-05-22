@@ -25,7 +25,7 @@
             <input type="checkbox" class="toggle toggle-neutral" name="send_to_community"  id="send_to_community" value="1" />
 
         
-        <button type="submit" class="btn btn-primary w-full mt-5 btn-lg">Verein erstellen</button>
+        <button type="submit" class="btn bg-info-content text-base-100 w-full mt-5 btn-lg">Verein erstellen</button>
         
     </form>
     </div>

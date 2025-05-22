@@ -34,6 +34,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/invitations/create', [InvitationController::class, 'create'])->name('invitations.create');
     Route::post('/invitations', [InvitationController::class, 'store'])->name('invitations.store');
     Route::get('/invitations', [InvitationController::class, 'index'])->name('invitations.index');
+    Route::delete('/invitations/{invitation}', [InvitationController::class, 'destroy'])->name('invitations.destroy');
 });
 
 

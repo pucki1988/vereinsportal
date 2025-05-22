@@ -33,8 +33,7 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'token' => 'required|string|exists:invitations,token',
+            'password' => ['required', 'confirmed', Rules\Password::defaults()]
         ]);
 
          // Falls Token vorhanden → Einladung prüfen
@@ -44,7 +43,7 @@ class RegisteredUserController extends Controller
             $invitation = Invitation::where('token', $request->token)->first();
     
             if (! $invitation || $invitation->expires_at->isPast()) {
-                return redirect()->route('register')->with('error', 'Ungültiger oder abgelaufener Einladungscode.');
+                return redirect()->route('register')->with('error', 'Ungültiger,gelöschter oder abgelaufener Einladungscode.');
             }
     
             // Automatisch E-Mail aus Einladung setzen

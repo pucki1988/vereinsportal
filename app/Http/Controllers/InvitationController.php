@@ -48,4 +48,13 @@ class InvitationController extends Controller
         ->route('invitations.index')
         ->with('success', 'Die Einladung wurde versendet.');
     }
+
+    public function destroy(Invitation $invitation)
+    {
+        $invitation->delete();
+
+        return redirect()->route('invitations.index')
+            ->with('success', 'Einladung gelöscht.');
+    }
+
 }

@@ -9,7 +9,7 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
         
                 <div class="flex justify-end">
-                <a href="{{ route('clubs.create') }}" class="btn btn-primary mb-4">Neuen Verein anlegen</a>
+                <a href="{{ route('clubs.create') }}" class="btn bg-info-content text-base-100 mb-4">Neuen Verein anlegen</a>
                 </div>
                     
         <table class="table w-full">

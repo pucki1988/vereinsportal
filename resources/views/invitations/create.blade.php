@@ -26,7 +26,7 @@
                 </select>
         
         </fieldset>
-        <button type="submit" class="btn btn-primary w-full mt-5 btn-lg">Einladen</button>
+        <button type="submit" class="btn bg-info-content text-base-100 w-full mt-5 btn-lg">Einladen</button>
     </form>
     </div>
     </div>

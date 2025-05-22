@@ -9,7 +9,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <div class="flex justify-end">
-                    <a href="{{ route('events.create') }}" class="btn btn-primary mb-4">Neues Event erstellen</a>
+                    <a href="{{ route('events.create') }}" class="btn bg-info-content text-base-100 mb-4">Neues Event erstellen</a>
                     </div>  
                     
     <!-- Prüfen, ob Events vorhanden sind -->

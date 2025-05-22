@@ -1,7 +1,7 @@
 @component('mail::message')
-# Einladung zum Verein
+# Einladung zum Verein {{ $invitation->club->name }}
 
-Du wurdest eingeladen, dich als Vereinsverwalter zu registrieren.
+Du wurdest eingeladen, dich als Vereinsverwalter  für den Verein **{{ $invitation->club->name }}** zu registrieren.
 
 <p>Nimm die Einladung über folgenden Button an</p>
 @component('mail::button', ['url' => $url])
@@ -14,7 +14,9 @@ Einladung annehmen
 @component('mail::button', ['url' => $base_url])
 Einladungscode selber eingeben
 @endcomponent
-<p>Einladungscode <b>{{ $invitation->token }}</b></p>
+
+**Einladungscode**
+> {{ $invitation->token }}
 
 
 Diese Einladung läuft am {{ $invitation->expires_at->format('d.m.Y') }} ab.
