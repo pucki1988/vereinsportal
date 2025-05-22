@@ -8,13 +8,13 @@ Du wurdest eingeladen, dich als Vereinsverwalter zu registrieren.
 Einladung annehmen
 @endcomponent
 
-<p><b>ODER</b></p>
+## ODER
 
 <p>Gib den Einladungscode selbst ein</p>
 @component('mail::button', ['url' => $base_url])
 Einladungscode selber eingeben
 @endcomponent
-<p>Einladungscode <b class="bg-info-content text-base-100 p-2">{{ $invitation->token }}</b></p>
+<p>Einladungscode <b>{{ $invitation->token }}</b></p>
 
 
 Diese Einladung läuft am {{ $invitation->expires_at->format('d.m.Y') }} ab.
