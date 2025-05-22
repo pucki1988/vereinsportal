@@ -30,6 +30,9 @@
                     <x-nav-link :href="route('invitations.index')" :active="request()->routeIs('invitations.index')">
                         {{ __('Einladungen') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('board-members.index')" :active="request()->routeIs('board-members.index')">
+                        {{ __('Vorstand') }}
+                    </x-nav-link>
                     @endrole
                 </div>
             </div>
@@ -101,6 +104,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('invitations.index')" :active="request()->routeIs('invitations.index')">
                         {{ __('Einladungen') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('board-members.index')" :active="request()->routeIs('board-members.index')">
+                        {{ __('Vorstand') }}
             </x-responsive-nav-link>
             @endrole
         </div>

@@ -9,7 +9,7 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
         
                 <div class="flex justify-end">
-                <a href="{{ route('board-members.create') }}" class="btn btn-primary mb-4">Vorstandschaftsmitglied anlegen</a>
+                <a href="{{ route('board-members.create') }}" class="btn bg-info-content text-base-100 mb-4">Vorstandschaftsmitglied anlegen</a>
                 </div>
                     
         <table class="table w-full">

@@ -41,7 +41,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 Route::resource('clubs', ClubController::class)->middleware(['auth', 'role:admin|manager']);
 Route::resource('events', EventController::class)->middleware(['auth','role:admin|manager']);
-Route::resource('board-members', BoardMemberController::class)->middleware(['auth']);
+Route::resource('board-members', BoardMemberController::class)->middleware(['auth','role:admin']);
 
 
 Route::resource('veranstaltungen', PublicEventController::class)->only(['index', 'show'])->parameters(['veranstaltungen' => 'event']);

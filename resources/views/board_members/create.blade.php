@@ -19,7 +19,7 @@
             <legend class="fieldset-legend">Position</legend>
             <input type="text" id="position" name="position" class="w-full" placeholder="Position" >
         
-        <button type="submit" class="btn btn-primary w-full mt-5 btn-lg">Mitglied erstellen</button>
+        <button type="submit" class="btn bg-info-content text-base-100 w-full mt-5 btn-lg">Mitglied erstellen</button>
         
     </form>
     </div>
