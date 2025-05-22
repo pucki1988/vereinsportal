@@ -35,7 +35,7 @@
 
 
                     </div>
-                    <h2 class="text-3xl font-bold">{{$event->start->format('d.m.Y')}}</h2>
+                    <h2 class="text-3xl font-bold text-info-content">{{$event->start->format('d.m.Y')}}</h2>
                     
 
                     </div>
@@ -58,7 +58,7 @@
 
 
                     </div>
-                    <h2 class="text-3xl font-bold">{{$event->location}}</h2>
+                    <h2 class="text-3xl font-bold text-info-content">{{$event->location}}</h2>
                     
 
                     </div>
@@ -81,7 +81,7 @@
 
 
                     </div>
-                    <h2 class="text-3xl font-bold">{{$event->club->name}}</h2>
+                    <h2 class="text-3xl font-bold text-info-content">{{$event->club->name}}</h2>
                     
 
                     </div>
