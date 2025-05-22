@@ -3,17 +3,18 @@
 
 Du wurdest eingeladen, dich als Vereinsverwalter zu registrieren.
 
-<p>Registriere dich über folgenden Button</p>
+<p>Nimm die Einladung über folgenden Button an</p>
 @component('mail::button', ['url' => $url])
-Registrieren
+Einladung annehmen
 @endcomponent
 
-<p>oder alternativ durch manuell eingabe des Token.</p>
+<p><b>ODER</b></p>
+
+<p>Gib den Einladungscode selbst ein</p>
 @component('mail::button', ['url' => $base_url])
-Manuelle Eingabe
+Einladungscode selber eingeben
 @endcomponent
-
-<p>Einladungscode: <b>{{ $invitation->token }}</b></p>
+<p>Einladungscode <b class="bg-info-content text-base-100 p-2">{{ $invitation->token }}</b></p>
 
 
 Diese Einladung läuft am {{ $invitation->expires_at->format('d.m.Y') }} ab.

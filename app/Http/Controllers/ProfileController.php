@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\User;
 
 class ProfileController extends Controller
 {
@@ -57,4 +58,23 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    /**
+     * Delete the user's account.
+     */
+   
+    public function destroyUser(User $user): RedirectResponse
+    {
+            // Optional: zusätzliche Prüfungen, z. B. nicht sich selbst löschen
+            if (auth()->id() === $user->id) {
+                return redirect()->back()->with('error', 'Du kannst deinen eigenen Account nicht löschen.');
+            }
+        
+            $user->delete();
+        
+            return redirect()->back() // oder ein anderes Ziel
+                             ->with('success', 'Benutzer erfolgreich gelöscht.');
+    }
+        
+    
 }

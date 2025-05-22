@@ -59,6 +59,7 @@
                 <div>{{ $user->name }}</div>
                 <div class="text-xs uppercase font-semibold opacity-60">{{  $user->email }}</div>
                 </div>
+                
                 </li>
                 @endforeach
             </ul>
