@@ -47,7 +47,13 @@ public function store(Request $request)
 }
 public function edit(Club $club)
 {
-    return view('clubs.edit', compact('club'));
+    $user = auth()->user();
+
+    if ($user->hasRole('admin') || $user->club_id === $club->id) {
+        return view('clubs.edit', compact('club'));
+    }
+
+    abort(403, 'Kein Zugriff erlaubt.');
 }
 
 public function update(Request $request, Club $club)
@@ -71,9 +77,20 @@ public function update(Request $request, Club $club)
         'send_to_community'=>$request->boolean('send_to_community')
     ]);
 
-    return redirect()
+    $user = auth()->user();
+    if ($user->hasRole('manager') || $user->club_id === $club->id) {
+        return redirect()
+        ->route('clubs.show',$user->club_id)
+        ->with('success', 'Der Verein wurde erfolgreich aktualisiert.');
+    }
+    elseif($user->hasRole('admin')){
+        return redirect()
         ->route('clubs.index')
         ->with('success', 'Der Verein wurde erfolgreich aktualisiert.');
+    }
+    abort(403);
+
+
 }
 public function destroy(Club $club)
 {

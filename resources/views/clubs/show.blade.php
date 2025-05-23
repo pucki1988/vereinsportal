@@ -10,7 +10,13 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
+                <div class="flex justify-end">
+                <a href="{{ route('clubs.edit', $club->id) }}" class="btn bg-info-content text-base-100 mb-4">Verein bearbeiten</a>
+                </div>
 
+
+
+                
                 <div class="text-xl lg:text-3xl py-2">Vereinsinformationen</div>
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-6">
        
