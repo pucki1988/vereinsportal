@@ -9,7 +9,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BoardMemberController;
 use App\Http\Controllers\PublicBoardController;
 use App\Http\Controllers\PublicClubController;
-
+use App\Http\Controllers\CalendarExportController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -49,6 +49,6 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/board', [PublicBoardController::class, 'index'])->name('board');
 
 Route::resource('clubinfo', PublicClubController::class)->only(['show'])->parameters(['clubinfo' => 'club']);
-
+Route::get('/calender/events.ics', [CalendarExportController::class, 'ics'])->name("calendar.export");
 
 require __DIR__.'/auth.php';

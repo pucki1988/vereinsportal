@@ -26,11 +26,11 @@
                 <tr>
                     <th>#</th>
                     <th>Name</th>
-                    <th>Start</th>
+                    <th class="hidden md:table-cell">Start</th>
                     @role('admin')
-                    <th class="hidden md:block">Verein</th>
+                    <th class="hidden md:table-cell">Verein</th>
                     @else
-                    <th>Ende</th>
+                    <th class="hidden md:table-cell"></th>>Ende</th>
                     @endif
                     <th>Aktionen</th>
                 </tr>
@@ -58,11 +58,11 @@
 
 </td>
                         <td>{{ $event->title }}</td>
-                        <td>{{ $event->start->format('d.m.Y') }}</td>
+                        <td class="hidden md:table-cell">{{ $event->start->format('d.m.Y') }}</td>
                         @role('admin')
-                        <td class="hidden md:block">{{ $event->club->name }}</td>
+                        <td class="hidden md:table-cell">{{ $event->club->name }}</td>
                         @else
-                        <td>{{ $event->end->format('d.m.Y') }}</td>
+                        <td class="hidden md:table-cell"></td>>{{ $event->end->format('d.m.Y') }}</td>
                         @endif
                         <td>
                             <a href="{{ route('events.edit', $event->id) }}" class="btn btn-xs md:btn"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5">
