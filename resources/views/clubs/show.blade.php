@@ -39,7 +39,7 @@
                         <h2 class="card-title">{{$club->address}}</h2>
                     </div>
                 </div>
-                <div class="card text-base-100 w-full bg-info-content">
+                <!--<div class="card text-base-100 w-full bg-info-content">
                     <div class="card-body flex justify-between">
                         <div class="badge bg-base-100">Weitergabe Pfarrbrief</div>
                         <h2 class="card-title">{{ $club->send_to_church ? 'Ja' : 'Nein' }}</h2>
@@ -50,7 +50,7 @@
                         <div class="badge bg-base-100">Weitergabe Gemeinde</div>
                         <h2 class="card-title">{{ $club->send_to_community ? 'Ja' : 'Nein' }}</h2>
                     </div>
-                </div>
+                </div>-->
 
                 </div>
                 

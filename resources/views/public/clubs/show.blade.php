@@ -6,38 +6,52 @@
 <div class="py-6 px-4 max-w-7xl mx-auto">
 
 
-                <div class="text-xl lg:text-3xl py-2">Vereinsinformationen</div>
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-6">
-       
-                <div class="card text-base-100 w-full bg-info-content">
+                
+                
+        <!--<div class="text-xl lg:text-3xl py-2">Vereinsinformationen</div>-->
+
+                <div class="grid grid-cols-1 md:grid-cols-6 md:gap-4">
+
+                <div class="col-span-1 md:col-span-2 flex items-center justify-center h-full bg-base-100">
+                <div class="card text-base-100 bg-base-100 ">
                     <div class="card-body flex justify-between">
-                        <div class="badge bg-base-100">Name</div>
+                        <img class="w-full" src="https://djk-sg-schoenbrunn.de/templates/djk_sg/images/logosg.png"/>
+                    </div>
+                </div>
+                </div>
+
+                <div class="col-span-1 md:col-span-4 grid grid-rows-3 md:gap-4 h-full">
+
+                <div class="card text-base-100  bg-info-content mb-3 ">
+                    <div class="card-body flex justify-between">
+                        <div class="badge bg-base-100">Verein</div>
                         <h2 class="card-title">{{$club->name}}</h2>
                     </div>
                 </div>
-
-                <div class="card text-base-100 w-full bg-info-content">
+                <div class="card text-base-100 bg-info-content mb-3">
                     <div class="card-body flex justify-between">
                         <div class="badge bg-base-100">Website</div>
-                        <h2 class="card-title">{{$club->website}}</h2>
+                        <h2 class="card-title"><a href="{{$club->website}}" target="_blank">Website aufrufen</a></h2>
                     </div>
                 </div>
-                <div class="card text-base-100 w-full bg-info-content">
+                <div class="card text-base-100 bg-info-content mb-3">
                     <div class="card-body flex justify-between">
                         <div class="badge bg-base-100">Anschrift</div>
                         <h2 class="card-title">{{$club->address}}</h2>
                     </div>
                 </div>
                 </div>
-                <div class="text-xl lg:text-3xl py-2">Anstehende Veranstaltungen</div>
+                
+                </div>
+                <div class="text-xl lg:text-3xl py-2 mt-2">Anstehende Veranstaltungen</div>
                 @if($club->events->Count() <= 0)
-            <div role="alert" class="alert bg-base-100 text-info-content text-center border border-info-content flex">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="h-6 w-6 shrink-0 stroke-current">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
-            <span class="text-center">Im Moment hat der Verein keine Veranstaltungen geplant</span>
-            </div>
-        @endif
+                    <div role="alert" class="alert bg-base-100 text-info-content text-center border border-info-content flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="h-6 w-6 shrink-0 stroke-current">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span class="text-center">Im Moment hat der Verein keine Veranstaltungen geplant</span>
+                    </div>
+                @endif
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-6">
         
 
@@ -80,8 +94,7 @@ Details</a>
         </div>
         @endforeach
         </div>
-
-
             </div>
+            
         
 </x-app-layout>

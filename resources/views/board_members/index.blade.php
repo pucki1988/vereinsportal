@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl">Vorstandschaft</h2>
+        <h2 class="text-xl font-semibold leading-tight text-gray-800">Vorstandschaft</h2>
     </x-slot>
 
     <div class="lg:py-12">
@@ -11,7 +11,14 @@
                 <div class="flex justify-end">
                 <a href="{{ route('board-members.create') }}" class="btn bg-info-content text-base-100 mb-4">Vorstandschaftsmitglied anlegen</a>
                 </div>
-                    
+           @if ($members->isEmpty())
+    <div role="alert" class="alert bg-base-100 text-info-content text-center border border-info-content flex">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="h-6 w-6 shrink-0 stroke-current">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span class="text-center">Keine Vorstandschaftsmitglieder erstellt</span>
+    </div>
+    @else          
         <table class="table w-full">
             <thead>
                 <tr>
@@ -46,6 +53,7 @@
                 @endforeach
             </tbody>
         </table>
+        @endif
     </div>
     </div>
     </div>
