@@ -66,9 +66,9 @@ Details</a>
                 <div class="card-actions justify-start">
                 
                 
-                <a href="{{ route('clubinfo.show', $club->id) }}" class="btn btn-content-neutral">Information</a>
+                <a href="{{ route('clubinfo.show', $club->id) }}" class="btn bg-base-100 text-info-content">Information</a>
                 
-                <a href="{{ route('veranstaltungen.index',['club_id' => $club->id]) }}" class="btn btn-outline ms-2">Veranstaltungen</a>
+                <a href="{{ route('veranstaltungen.index',['club_id' => $club->id]) }}" class="btn bg-base-100 text-info-content ms-2">Veranstaltungen</a>
                 </div>
             </div>
         </div>
